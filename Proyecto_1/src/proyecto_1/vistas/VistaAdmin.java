@@ -25,9 +25,11 @@ import javax.swing.table.DefaultTableModel;
 import proyecto_1.datos.Clientes;
 import proyecto_1.datos.Productos;
 import proyecto_1.datos.Sucursales;
+import proyecto_1.datos.Vendedores;
 import proyecto_1.logica.LogicaCliente;
 import proyecto_1.logica.LogicaProductos;
 import proyecto_1.logica.LogicaSucursales;
+import proyecto_1.logica.LogicaVendedores;
 
 /**
  *
@@ -510,11 +512,67 @@ public class VistaAdmin {
 
     public void GenerarVendedor() {
 
+        
+        
+        
+        
+
+        JTable table = new JTable();
+        table.setPreferredSize(null);
+        table.setFillsViewportHeight(true);
+        
+        LogicaVendedores logic = new LogicaVendedores();
+        table.setModel(logic.listadoOficial());
+        
+        
+        JScrollPane scroll =  new JScrollPane(table);
+        scroll.setVisible(true);
+        this.panel4.add(scroll);
+        scroll.setBounds(0, 0, 400, 300);
+        
+        
+         table.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int codSeleccionado = Integer.parseInt( (String)table.getValueAt(table.getSelectedRow() ,0));
+                vendedorSeleccionado = codSeleccionado;
+                int cantidadColumnas = table.getModel().getColumnCount()-1;
+                int columnaActual = table.getSelectedColumn();
+                if(columnaActual  == cantidadColumnas){
+                    LogicaVendedores logic = new LogicaVendedores();
+                    
+                    
+                    if(logic.eliminar(codSeleccionado)){
+                        table.setModel(logic.listadoOficial());
+                        JOptionPane.showMessageDialog(null, "Vendedor Eliminado");
+                    }else{
+                         JOptionPane.showMessageDialog(null, "No se pudo eliminar");
+                    }
+                    
+                }
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            }
+
+            
+        });
+        
+        
         JButton btnCrear2 = new JButton("Crear");
 
         btnCrear2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new VistaAdminCrearVendedor();
+                new VistaAdminCrearVendedor(table);
             }
         }
         );
@@ -527,7 +585,8 @@ public class VistaAdmin {
 
         btnCargaMasiva.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new VistaAdminAutenticacion();
+            
+                
             }
         }
         );
@@ -540,7 +599,17 @@ public class VistaAdmin {
 
         btnActualizar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new VistaAdminActualizarVendedor();
+                
+               
+                
+                
+                LogicaVendedores logic  =  new LogicaVendedores();
+                Vendedores buscar = logic.buscarUno(vendedorSeleccionado);
+                if(buscar==null){
+                    JOptionPane.showMessageDialog(null, "No se selecciono Vendedor");
+                }else{
+                    new VistaAdminActualizarVendedor(buscar,table);
+                }
             }
         }
         );

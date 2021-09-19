@@ -66,7 +66,8 @@ public class VistaAdminActualizarCliente {
         this.principal.add(texto);
         
         JTextField texto2 = new JTextField(this.actual.getCodigo() + "");
-        texto2.setBounds(167, 100, 250, 30); 
+        texto2.setBounds(167, 100, 250, 30);
+        texto2.setEnabled(false);
         this.principal.add(texto2);
         
         JLabel label = new JLabel("Nombre");

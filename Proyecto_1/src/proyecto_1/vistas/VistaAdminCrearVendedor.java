@@ -6,7 +6,11 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import proyecto_1.logica.LogicaCliente;
+import proyecto_1.logica.LogicaVendedores;
 
 
 public class VistaAdminCrearVendedor {
@@ -16,15 +20,17 @@ public class VistaAdminCrearVendedor {
     
     
     private JFrame principal;
+   private JTable tabla;
 
     
 
     
-    public VistaAdminCrearVendedor() {
+    public VistaAdminCrearVendedor(JTable tabla) {
         
         this.principal = new JFrame();
         this.principal.setVisible(true);
         this.principal.setBounds(0, 0, 500, 650);
+         this.tabla = tabla;
 
     
         
@@ -105,7 +111,42 @@ public class VistaAdminCrearVendedor {
         
         this.principal.repaint();
         
+        
+        
+                btnAgregar .addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                LogicaVendedores logic = new LogicaVendedores();
+                int codigo=Integer.parseInt(texto2.getText());
+                int caja=Integer.parseInt(texto3.getText());
+                int ventas=Integer.parseInt(texto4.getText());
+                
+
+
+                
+                if(logic.crear(codigo, texto.getText(), caja,ventas, texto5.getText(),texto5.getText())){
+                    JOptionPane.showMessageDialog(null, "Vendedor Creado");
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se pudo crear Vendedor");
+                }
+                tabla.setModel(logic.listadoOficial()); 
+        
+        
+        
+        
+            }
+        });
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }
+    
     
     
     
