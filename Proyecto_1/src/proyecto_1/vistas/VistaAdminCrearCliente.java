@@ -46,7 +46,6 @@ public class VistaAdminCrearCliente {
 
         btnAgregar .addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               new VistaAdminCrearProducto();
             }
         });
 

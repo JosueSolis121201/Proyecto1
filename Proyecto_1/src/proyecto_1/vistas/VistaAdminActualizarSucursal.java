@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
 import proyecto_1.datos.Sucursales;
@@ -15,16 +17,17 @@ import proyecto_1.logica.LogicaSucursales;
 public class VistaAdminActualizarSucursal {
     private JFrame principal;
     Sucursales actual;
+    JTable tabla;
     
 
     
-    public VistaAdminActualizarSucursal(Sucursales actual) {
+    public VistaAdminActualizarSucursal(Sucursales actual,JTable tabla) {
         
         this.principal = new JFrame();
         this.principal.setVisible(true);
         this.principal.setBounds(0, 0, 500, 650);
         this.actual = actual;
-    
+        this.tabla = tabla;
         
         this.Crear();
     }
@@ -43,6 +46,7 @@ public class VistaAdminActualizarSucursal {
         JTextField texto = new JTextField(this.actual.getCodigo()+"" );
         texto.setBounds(167, 100, 250, 30); 
         this.principal.add(texto);
+        texto.setEnabled(false);
         
         JTextField texto2 = new JTextField(this.actual.getNombre());
         texto2.setBounds(167, 150, 250, 30); 
@@ -92,8 +96,16 @@ public class VistaAdminActualizarSucursal {
         btnAgregar .addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 LogicaSucursales logic = new LogicaSucursales();
-                logic.actualizar(Integer.parseInt( texto.getText()), texto2.getText(), texto3.getText(), 
-                        texto4.getText(), Integer.parseInt(texto5.getText()));
+                
+                
+                if(logic.actualizar(Integer.parseInt( texto.getText()), texto2.getText(), texto3.getText(), 
+                        texto4.getText(), Integer.parseInt(texto5.getText()))){
+                     JOptionPane.showMessageDialog(null, "Sucursal Actualizada");
+                }else{
+                    JOptionPane.showMessageDialog(null, "Error al actualizar Sucursal ");
+                }
+                
+                tabla.setModel(logic.listadoOficial());
             }
         });
         

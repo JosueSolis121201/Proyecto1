@@ -48,7 +48,6 @@ public class VistaAdminActualizarCliente {
 
         btnAgregar .addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               new VistaAdminActualizarProducto();
             }
         });
 

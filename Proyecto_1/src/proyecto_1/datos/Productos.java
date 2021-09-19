@@ -8,6 +8,7 @@ public class Productos{
     private String descripcion;
     private int cantidad;
     private int precio;
+    private int numVentas;
     
     
     
@@ -20,6 +21,7 @@ public class Productos{
     this.descripcion=descripcion;
     this.cantidad=cantidad;
     this.precio=precio;
+    this.numVentas=0;
 
     }
 
@@ -61,6 +63,14 @@ public class Productos{
 
     public void setPrecio(int precio) {
         this.precio = precio;
+    }
+
+    public int getNumVentas() {
+        return numVentas;
+    }
+
+    public void setNumVentas(int numVentas) {
+        this.numVentas = numVentas;
     }
     
     

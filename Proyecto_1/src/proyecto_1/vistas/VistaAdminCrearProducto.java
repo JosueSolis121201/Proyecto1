@@ -6,34 +6,40 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import proyecto_1.logica.LogicaProductos;
+import proyecto_1.logica.LogicaSucursales;
 
 
 public class VistaAdminCrearProducto {
     
     
     private JFrame principal;
+    private JTable tabla;
 
     
 
     
-    public VistaAdminCrearProducto() {
+    public VistaAdminCrearProducto(JTable tabla) {
         
-        this.principal = new JFrame();
+        this.principal = new JFrame();                
         this.principal.setVisible(true);
         this.principal.setBounds(0, 0, 500, 650);
-
-    
+        this.tabla = tabla;
         
         this.Crear();
     }
     
     public void Crear() {
+        
+        
+        
         JButton btnAgregar = new JButton("Agregar");
 
         btnAgregar .addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               new VistaAdminCrearProducto();
             }
         });
 
@@ -89,10 +95,36 @@ public class VistaAdminCrearProducto {
  
         JLabel labe6 = new JLabel("Precio");
         labe6.setBounds(70, 300, 110, 30); 
-        this.principal.add(labe6);          
+        this.principal.add(labe6);   
         
         
-        this.principal.repaint();
+        
+           
+        
+                btnAgregar .addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                LogicaProductos logic = new LogicaProductos();
+                int codigo=Integer.parseInt(texto2.getText());
+                int cantidad=Integer.parseInt(texto4.getText());
+                int Precio=Integer.parseInt(texto5.getText());
+
+                
+                if(logic.crear(codigo, texto.getText(), texto3.getText(),cantidad, Precio)){
+                    JOptionPane.showMessageDialog(null, "Usuario Creado");
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se pudo crear usuario");
+                }
+                tabla.setModel(logic.listadoOficial()); 
+        
+        
+        
+        
+            }
+        });
+        
+    }
+    
+       
         
     }
     
@@ -104,4 +136,4 @@ public class VistaAdminCrearProducto {
     
     
     
-}
+
