@@ -22,8 +22,10 @@ import javax.swing.JTable;
 import javax.swing.WindowConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import proyecto_1.datos.Clientes;
 import proyecto_1.datos.Productos;
 import proyecto_1.datos.Sucursales;
+import proyecto_1.logica.LogicaCliente;
 import proyecto_1.logica.LogicaProductos;
 import proyecto_1.logica.LogicaSucursales;
 
@@ -354,12 +356,81 @@ public class VistaAdmin {
     }
 
     public void GenerarClientes() {
+        
+        
+        
+        
+        
+        
+
+        JTable table = new JTable();
+        table.setPreferredSize(null);
+        table.setFillsViewportHeight(true);
+        
+        LogicaCliente logic = new LogicaCliente();
+        table.setModel(logic.listadoOficial());
+        
+        
+        JScrollPane scroll =  new JScrollPane(table);
+        scroll.setVisible(true);
+        this.panel3.add(scroll);
+        scroll.setBounds(0, 0, 400, 300);
+        
+        
+         table.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+            @Override
+            public void mousePressed(MouseEvent e) {
+                int codSeleccionado = Integer.parseInt( (String)table.getValueAt(table.getSelectedRow() ,0));
+                clienteSeleccionado = codSeleccionado;
+                int cantidadColumnas = table.getModel().getColumnCount()-1;
+                int columnaActual = table.getSelectedColumn();
+                if(columnaActual  == cantidadColumnas){
+                    LogicaCliente logic = new LogicaCliente();
+                    
+                    
+                    if(logic.eliminar(codSeleccionado)){
+                        table.setModel(logic.listadoOficial());
+                        JOptionPane.showMessageDialog(null, "Cliente Eliminado");
+                    }else{
+                         JOptionPane.showMessageDialog(null, "No se pudo eliminar");
+                    }
+                    
+                }
+            }
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+            @Override
+            public void mouseClicked(MouseEvent e) {
+            }
+
+            
+        });
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
         JButton btnCrear2 = new JButton("Crear");
 
         btnCrear2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new VistaAdminCrearCliente();
+                
+          new VistaAdminCrearCliente(table);
+
             }
         }
         );
@@ -385,7 +456,20 @@ public class VistaAdmin {
 
         btnActualizar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new VistaAdminActualizarCliente();
+                
+               
+                
+                
+                LogicaCliente logic  =  new LogicaCliente();
+                Clientes buscar = logic.buscarUno(clienteSeleccionado);
+                if(buscar==null){
+                    JOptionPane.showMessageDialog(null, "No se selecciono producto");
+                }else{
+                    new VistaAdminActualizarCliente(buscar,table);
+                }
+            
+                
+                
             }
         }
         );

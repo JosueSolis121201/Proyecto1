@@ -10,8 +10,14 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+import proyecto_1.datos.Clientes;
+import proyecto_1.datos.Productos;
+import proyecto_1.logica.LogicaCliente;
+import proyecto_1.logica.LogicaProductos;
 
 /**
  *
@@ -30,15 +36,17 @@ public class VistaAdminActualizarCliente {
     
     private JFrame principal;
 
-    
+    Clientes actual;
+    JTable tabla; 
 
     
-    public VistaAdminActualizarCliente() {
+    public VistaAdminActualizarCliente(Clientes actual,JTable tabla) {
         
         this.principal = new JFrame();
         this.principal.setVisible(true);
         this.principal.setBounds(0, 0, 500, 650);
-
+        this.actual = actual;
+        this.tabla = tabla;
         
         this.Crear();
     }
@@ -46,10 +54,6 @@ public class VistaAdminActualizarCliente {
     public void Crear() {
         JButton btnAgregar = new JButton("Actualizar");
 
-        btnAgregar .addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            }
-        });
 
         
         btnAgregar.setBounds(167,400, 250, 30);
@@ -57,11 +61,11 @@ public class VistaAdminActualizarCliente {
         this.principal.add(btnAgregar);
         
         
-        JTextField texto = new JTextField("");
+        JTextField texto = new JTextField(this.actual.getNombre());
         texto.setBounds(167, 150, 250, 30); 
         this.principal.add(texto);
         
-        JTextField texto2 = new JTextField("");
+        JTextField texto2 = new JTextField(this.actual.getCodigo() + "");
         texto2.setBounds(167, 100, 250, 30); 
         this.principal.add(texto2);
         
@@ -79,7 +83,7 @@ public class VistaAdminActualizarCliente {
         
       
         
-        JTextField texto3 = new JTextField("");
+        JTextField texto3 = new JTextField(this.actual.getNit()+"");
         texto3.setBounds(167, 200, 250, 30); 
         this.principal.add(texto3);
  
@@ -88,7 +92,7 @@ public class VistaAdminActualizarCliente {
         this.principal.add(labe4);
 
          
-        JTextField texto4 = new JTextField("");
+        JTextField texto4 = new JTextField(this.actual.getCorreo());
         texto4.setBounds(167, 250, 250, 30); 
         this.principal.add(texto4);
  
@@ -97,7 +101,7 @@ public class VistaAdminActualizarCliente {
         this.principal.add(labe5);        
         
         
-        JTextField texto5 = new JTextField("");
+        JTextField texto5 = new JTextField(this.actual.getGenero());
         texto5.setBounds(167, 300, 250, 30); 
         this.principal.add(texto5);
  
@@ -105,6 +109,32 @@ public class VistaAdminActualizarCliente {
         labe6.setBounds(70, 300, 110, 30); 
         this.principal.add(labe6);          
 
+        
+        
+        
+        
+        
+        btnAgregar .addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+                
+
+                LogicaCliente logic = new LogicaCliente();
+                if (logic.actualizar(Integer.parseInt(texto2.getText()+""), texto.getText(),Integer.parseInt(texto3.getText()+""),
+                        texto4.getText(), texto5.getText())) {
+                    JOptionPane.showMessageDialog(null, "Cliente Actualizado");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al actualizar Cliente");
+                }
+                tabla.setModel(logic.listadoOficial());
+                
+                
+                
+                
+                
+                
+            }
+        });
 
     }
     

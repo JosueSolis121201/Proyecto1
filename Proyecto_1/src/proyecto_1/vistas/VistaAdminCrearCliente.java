@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package proyecto_1.vistas;
 
 import java.awt.event.ActionEvent;
@@ -10,31 +6,28 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import proyecto_1.logica.LogicaCliente;
+import proyecto_1.logica.LogicaProductos;
 
-/**
- *
- * @author Norki
- */
 public class VistaAdminCrearCliente {
     
+
     
-    
-    
-    
-    
-    
-    
+    private JTable tabla;
     private JFrame principal;
 
     
 
     
-    public VistaAdminCrearCliente() {
+    public VistaAdminCrearCliente(JTable tabla) {
         
         this.principal = new JFrame();
         this.principal.setVisible(true);
         this.principal.setBounds(0, 0, 500, 650);
+         this.tabla = tabla;
 
     
         
@@ -104,7 +97,26 @@ public class VistaAdminCrearCliente {
         this.principal.add(labe6);          
         
 
+                btnAgregar .addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                LogicaCliente logic = new LogicaCliente();
+                int codigo=Integer.parseInt(texto2.getText());
+                int NIT=Integer.parseInt(texto3.getText());
+
+
+                
+                if(logic.crear(codigo, texto.getText(), NIT,texto4.getText(), texto5.getText())){
+                    JOptionPane.showMessageDialog(null, "Usuario Creado");
+                }else{
+                    JOptionPane.showMessageDialog(null, "No se pudo crear usuario");
+                }
+                tabla.setModel(logic.listadoOficial()); 
         
+        
+        
+        
+            }
+        });
         
         this.principal.repaint();
         

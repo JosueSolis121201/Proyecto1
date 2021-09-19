@@ -25,7 +25,7 @@ public class Proyecto_1 {
    
     public  static Sucursales sucursal[]= new Sucursales [50];
     public  static Productos[] producto= new Productos [200];
-    public  static Clientes[] cleinte= new Clientes [100];
+    public  static Clientes[] cliente= new Clientes [100];
     public  static Vendedores[] vendedor= new Vendedores [400];
     public  static Ventas[] venta = new Ventas [1000];
     
