@@ -1,5 +1,8 @@
 package proyecto_1.logica;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableModel;
 import proyecto_1.Proyecto_1;
 import proyecto_1.datos.Sucursales;
 
@@ -9,8 +12,26 @@ public class LogicaSucursales {
 
     }
 
-    public void listadoOficial() {
+    public DefaultTableModel listadoOficial() {
+        String [] header={"codigo","nombre","direccion","correo","telefono","Accion"};
+        String [][] data={};
+        DefaultTableModel modelo = new DefaultTableModel(data,header);
+        
 
+        for(int i=0;i<Proyecto_1.sucursal.length;i++){
+        
+            if(Proyecto_1.sucursal[i]!=null){
+        
+                String[] fila={Proyecto_1.sucursal[i].getCodigo()+ "",Proyecto_1.sucursal[i].getNombre(),
+                Proyecto_1.sucursal[i].getDireccion(),Proyecto_1.sucursal[i].getCorreo(),
+                Proyecto_1.sucursal[i].getTelefono()+"","Eliminar"};
+                modelo.addRow(fila);        
+
+            }
+        
+        
+        }
+        return modelo;
     }
 
     public void cargaMasiva() {
@@ -72,7 +93,21 @@ public class LogicaSucursales {
         return false;
 
     }
+    public Sucursales buscarUno(int codigo) {
 
+        for (int i = 0; i < Proyecto_1.sucursal.length; i++) {
+
+            if (Proyecto_1.sucursal[i] != null) {
+
+                if (codigo == Proyecto_1.sucursal[i].getCodigo()) {
+
+                    return Proyecto_1.sucursal[i];
+
+                }
+            }
+        }
+        return null;
+    }
     public boolean eliminar(int codigo) {
 
         for (int i = 0; i < Proyecto_1.sucursal.length; i++) {
