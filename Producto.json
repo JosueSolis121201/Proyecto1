@@ -1,0 +1,16 @@
+[
+{
+"codigo":1,
+"nombre":"Barreno",
+"descripcion":"Herramienta..",
+"cantidad":30,
+"precio": 360.00
+},
+{
+"codigo":2,
+"nombre":"Jabon",
+"descripcion":"Jabon..",
+"cantidad":100,
+"precio": 25.00
+}
+]

@@ -106,7 +106,7 @@ public class VistaAdminCrearProducto {
                 LogicaProductos logic = new LogicaProductos();
                 int codigo=Integer.parseInt(texto2.getText());
                 int cantidad=Integer.parseInt(texto4.getText());
-                int Precio=Integer.parseInt(texto5.getText());
+                double Precio=Double.parseDouble(texto5.getText());
 
                 
                 if(logic.crear(codigo, texto.getText(), texto3.getText(),cantidad, Precio)){

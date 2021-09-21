@@ -1,6 +1,17 @@
 
 package proyecto_1;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import proyecto_1.datos.Clientes;
 import proyecto_1.datos.Productos;
 import proyecto_1.datos.Sucursales;
@@ -46,6 +57,14 @@ public class Proyecto_1 {
                  // VistaAdminCrearVendedor a=new VistaAdminCrearVendedor();
                  // VistaAdminActualizarVendedor a=new VistaAdminActualizarVendedor();
 
+        
+
+    // Se asocia el documento al OutputStream y se indica que el espaciado entre
+    // lineas sera de 20. Esta llamada debe hacerse antes de abrir el documento
+    
+
+    // Se abre el documento.
+                 
         
     }
     

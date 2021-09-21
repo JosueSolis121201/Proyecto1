@@ -1,8 +1,17 @@
 package proyecto_1.logica;
 
+import java.io.File;
+import java.io.FileReader;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableModel;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import proyecto_1.Proyecto_1;
 import proyecto_1.datos.Sucursales;
 
@@ -35,6 +44,43 @@ public class LogicaSucursales {
     }
 
     public void cargaMasiva() {
+        
+        
+        
+        
+        JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("json", "json", "JSON");
+        jfc.addChoosableFileFilter(filter);
+        int returnValue = jfc.showOpenDialog(null);
+        
+        boolean repetido = false;
+        
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            try {
+                File selectedFile = jfc.getSelectedFile();
+                Object obj = new JSONParser().parse(new FileReader(selectedFile.getAbsolutePath()));
+                JSONArray arregloJSON = (JSONArray) obj;
+                for (Object cada : arregloJSON) {
+                    JSONObject cadaConvertido = (JSONObject) cada;
+                    
+                    int codigo = Integer.parseInt(cadaConvertido.get("codigo") + "");
+                    String nombre = cadaConvertido.get("nombre") + "";
+                    String direccion =cadaConvertido.get("direccion") + "";
+                    String correo = cadaConvertido.get("correo") + "";
+                    int telefono = Integer.parseInt(cadaConvertido.get("telefono") + "");
+
+                    if(this.crear(codigo, nombre, direccion, correo, telefono)==false){
+                        repetido=true;
+                    }
+                }
+            } catch (Exception ex) {
+                System.out.println("Error al leer archivo vendedores");
+            }
+        }
+        
+        if(repetido == true){
+             JOptionPane.showMessageDialog(null, "Hay Datos Con Codigos Repetidos En El Archivo");
+        }
 
     }
     

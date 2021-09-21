@@ -165,7 +165,9 @@ public class VistaAdmin {
 
         btnCargaMasiva.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new VistaAdminAutenticacion();
+                LogicaSucursales logic = new LogicaSucursales();
+                logic.cargaMasiva();
+                table.setModel(logic.listadoOficial());
             }
         }
         );
@@ -298,7 +300,11 @@ public class VistaAdmin {
 
         btnCargaMasiva.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new VistaAdminAutenticacion();
+                
+               
+                LogicaProductos logic = new LogicaProductos();
+                logic.cargaMasiva();
+                table.setModel(logic.listadoOficial());
             }
         }
         );
@@ -445,7 +451,14 @@ public class VistaAdmin {
 
         btnCargaMasiva.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new VistaAdminAutenticacion();
+                
+                
+                
+                
+               
+                LogicaCliente logic = new LogicaCliente();
+                logic.cargaMasiva();
+                table.setModel(logic.listadoOficial());
             }
         }
         );
@@ -585,8 +598,9 @@ public class VistaAdmin {
 
         btnCargaMasiva.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            
-                
+                LogicaVendedores logic = new LogicaVendedores();
+                logic.cargaMasiva();
+                table.setModel(logic.listadoOficial());
             }
         }
         );

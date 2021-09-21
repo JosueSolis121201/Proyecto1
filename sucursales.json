@@ -1,0 +1,16 @@
+[
+    {
+    "codigo":1,
+    "nombre":"Guatemala",
+    "direccion":"9 Calle “C”...",
+    "correo":"a1@pos.gt",
+    "telefono":"11223344"
+    },
+    {
+    "codigo":2,
+    "nombre":"Izabal",
+    "direccion":"8 Av. Zona..",
+    "correo":"a2@pos.gt",
+    "telefono":"55667799"
+    }
+    ]

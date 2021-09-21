@@ -1,0 +1,16 @@
+[
+{
+"codigo":1,
+"nombre":"Juan",
+"nit":998877,
+"correo":"g@mail.gt",
+"genero":"m"
+},
+{
+"codigo":2,
+"nombre":"María",
+"nit":112233,
+"correo":"m@mail.gt",
+"genero":"f"
+}
+]
