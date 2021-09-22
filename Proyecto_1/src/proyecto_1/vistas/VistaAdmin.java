@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package proyecto_1.vistas;
 
 import java.awt.event.ActionEvent;
@@ -29,10 +25,7 @@ import proyecto_1.logica.LogicaProductos;
 import proyecto_1.logica.LogicaSucursales;
 import proyecto_1.logica.LogicaVendedores;
 
-/**
- *
- * @author Norki
- */
+
 public class VistaAdmin {
 
     private JFrame principal;

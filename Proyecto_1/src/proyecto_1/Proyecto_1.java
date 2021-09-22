@@ -28,6 +28,7 @@ import proyecto_1.vistas.VistaAdminAutenticacion;
 import proyecto_1.vistas.VistaAdminCrearSucursal;
 import proyecto_1.vistas.VistaAdminCrearProducto;
 import proyecto_1.vistas.VistaAdminCrearVendedor;
+import proyecto_1.vistas.VistaVendedor;
 
 public class Proyecto_1 {
 
@@ -100,7 +101,7 @@ public class Proyecto_1 {
         venta = new Ventas[1000];*/
         
         
-        VistaAdmin adminPrueba = new VistaAdmin();
+        VistaVendedor adminPrueba = new VistaVendedor();
         //VistaAdminAutenticacion adminPrueba1=new VistaAdminAutenticacion();
         //VistaAdminCrear a=new VistaAdminCrear();
         //VistaAdminActualizar a=new VistaAdminActualizar();
