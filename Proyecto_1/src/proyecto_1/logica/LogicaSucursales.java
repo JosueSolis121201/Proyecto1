@@ -1,7 +1,18 @@
 package proyecto_1.logica;
 
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.ObjectOutputStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -16,8 +27,77 @@ import proyecto_1.Proyecto_1;
 import proyecto_1.datos.Sucursales;
 
 public class LogicaSucursales {
-
+ public  void descargarDatos(String nombre,Object guardar) {
+        try {
+            ObjectOutputStream serial = new ObjectOutputStream(new FileOutputStream(nombre));
+            serial.writeObject(guardar);
+        } catch (Exception ex) {
+            System.out.println("Error al serializar");
+            System.out.println(ex);
+        }
+    }
     public void exportarListadoPdf() {
+        
+        
+        Document documento = new Document();
+        FileOutputStream ficheroPdf = null;
+        try {
+            ficheroPdf = new FileOutputStream("ReporteSucursales.pdf");
+            PdfWriter.getInstance(documento, ficheroPdf).setInitialLeading(20);
+            documento.open();
+            documento.add(new Paragraph("Reporte Sucursales",
+                    FontFactory.getFont("arial",
+                            22,
+                            Font.ITALIC,
+                            BaseColor.GREEN)));
+            documento.add(new Paragraph("\n"));
+            PdfPTable tabla = new PdfPTable(5);
+            String[] header = {"codigo", "nombre", "direccion", "correo", "telefono"};
+            for (String cada : header) {
+                System.out.println(cada);
+                tabla.addCell(cada);
+            }
+
+            for (int i = 0; i < Proyecto_1.sucursal.length; i++) {
+
+                if (Proyecto_1.sucursal[i] != null) {
+
+                    
+                String[] fila={Proyecto_1.sucursal[i].getCodigo()+ "",Proyecto_1.sucursal[i].getNombre(),
+                Proyecto_1.sucursal[i].getDireccion(),Proyecto_1.sucursal[i].getCorreo(),
+                Proyecto_1.sucursal[i].getTelefono()+""};
+                    
+                    for (String cada : fila) {
+                        tabla.addCell(cada);
+                        
+                    }
+
+                    
+
+                }
+
+            }
+
+            documento.add(tabla);
+            documento.close();
+        } catch (Exception ex) {
+            Logger.getLogger(Proyecto_1.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
 
     }
 
@@ -40,6 +120,8 @@ public class LogicaSucursales {
         
         
         }
+                this.descargarDatos("sucursal",Proyecto_1.sucursal );
+
         return modelo;
     }
 

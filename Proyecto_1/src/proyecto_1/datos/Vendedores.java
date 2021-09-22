@@ -1,10 +1,11 @@
 
 package proyecto_1.datos;
 
+import java.io.Serializable;
 import proyecto_1.Proyecto_1;
 
 
-public class Vendedores {
+public class Vendedores implements Serializable{
     //Código, Nombre, Caja, Ventas y Género
     private int codigo;
     private String nombre;

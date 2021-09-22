@@ -3,10 +3,12 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Norki/Desktop/Proyecto1/Proyecto_1/src/proyecto_1/logica/LogicaProductos.java</file>
-            <file>file:/C:/Users/Norki/Desktop/Proyecto1/Proyecto_1/src/proyecto_1/datos/Productos.java</file>
+            <file>file:/C:/Users/Norki/Desktop/Proyecto1/Proyecto_1/src/proyecto_1/Proyecto_1.java</file>
+            <file>file:/C:/Users/Norki/Desktop/Proyecto1/Proyecto_1/src/proyecto_1/vistas/VistaAdminActualizarVendedor.java</file>
             <file>file:/C:/Users/Norki/Desktop/Proyecto1/Proyecto_1/src/proyecto_1/vistas/VistaAdmin.java</file>
-            <file>file:/C:/Users/Norki/Desktop/Proyecto1/Proyecto_1/src/proyecto_1/vistas/VistaAdminCrearProducto.java</file>
+            <file>file:/C:/Users/Norki/Desktop/Proyecto1/Proyecto_1/src/proyecto_1/logica/LogicaCliente.java</file>
+            <file>file:/C:/Users/Norki/Desktop/Proyecto1/Proyecto_1/src/proyecto_1/logica/LogicaVendedores.java</file>
+            <file>file:/C:/Users/Norki/Desktop/Proyecto1/Proyecto_1/src/proyecto_1/vistas/VistaAdminCrearVendedor.java</file>
         </group>
     </open-files>
 </project-private>

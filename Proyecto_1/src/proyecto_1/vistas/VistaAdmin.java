@@ -5,13 +5,11 @@
  */
 package proyecto_1.vistas;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -20,8 +18,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.WindowConstants;
-import javax.swing.border.TitledBorder;
-import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
 import proyecto_1.datos.Clientes;
 import proyecto_1.datos.Productos;
 import proyecto_1.datos.Sucursales;
@@ -204,7 +202,12 @@ public class VistaAdmin {
 
         btnExportarListado.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new VistaAdminAutenticacion();
+                
+                
+               LogicaSucursales logic  =  new LogicaSucursales();
+               logic.exportarListadoPdf();
+                
+                
             }
         }
         );
@@ -215,8 +218,26 @@ public class VistaAdmin {
 
 
     }
-
+    
+    
+    
+    //-----------------------------------------------------------
+    //-----------------------------------------------------------
+    //------------------------------------------------------------
     public void GenerarProductos() {
+        
+        
+
+        
+        LogicaProductos logic = new LogicaProductos();
+        
+        JFreeChart grafica = logic.top3Ventas("Top 3 cantidad de Productos");
+        ChartPanel chartPanel = new ChartPanel( grafica );   
+        chartPanel.setPreferredSize(new  java.awt.Dimension( 560 , 367 ) );  
+        chartPanel.setVisible(true);
+        chartPanel.setBounds(550, 200, 300, 200);
+        chartPanel.setVisible(true);
+        this.panel2.add(chartPanel);
         
 
 
@@ -225,7 +246,6 @@ public class VistaAdmin {
         table.setPreferredSize(null);
         table.setFillsViewportHeight(true);
         
-        LogicaProductos logic = new LogicaProductos();
         table.setModel(logic.listadoOficial());
         
         
@@ -251,7 +271,9 @@ public class VistaAdmin {
                     
                     if(logic.eliminar(codSeleccionado)){
                         table.setModel(logic.listadoOficial());
-                        JOptionPane.showMessageDialog(null, "Usuario Eliminado");
+                        JOptionPane.showMessageDialog(null, "producto Eliminado");
+                         JFreeChart grafica = logic.top3Ventas("Top 3  cantidad de Productos");
+                         chartPanel.setChart(grafica); 
                     }else{
                          JOptionPane.showMessageDialog(null, "No se pudo eliminar");
                     }
@@ -284,9 +306,9 @@ public class VistaAdmin {
 
         btnCrear2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
-                   new VistaAdminCrearProducto(table);
-                
+                 new VistaAdminCrearProducto(table,chartPanel);
+                JFreeChart grafica = logic.top3Ventas("Top 3  cantidad de Productos");
+                chartPanel.setChart(grafica); 
                 
             }
         }
@@ -304,6 +326,9 @@ public class VistaAdmin {
                
                 LogicaProductos logic = new LogicaProductos();
                 logic.cargaMasiva();
+                
+                JFreeChart grafica = logic.top3Ventas("Top 3 Vendedores Ventas");
+                chartPanel.setChart(grafica); 
                 table.setModel(logic.listadoOficial());
             }
         }
@@ -324,7 +349,7 @@ public class VistaAdmin {
                 if(buscar==null){
                     JOptionPane.showMessageDialog(null, "No se selecciono producto");
                 }else{
-                    new VistaAdminActualizarProducto(buscar,table);
+                    new VistaAdminActualizarProducto(buscar,table,chartPanel);
                 }
             }
         }
@@ -351,7 +376,11 @@ public class VistaAdmin {
 
         btnExportarListado.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new VistaAdminAutenticacion();
+                
+               LogicaProductos logic  =  new LogicaProductos();
+               logic.exportarListadoPdf();
+                
+                
             }
         }
         );
@@ -362,10 +391,19 @@ public class VistaAdmin {
 
         this.panel2.repaint();
     }
-
+    
+    //--------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------
+    //--------------------------------------------------------------------------------------------------------
     public void GenerarClientes() {
-        
-        
+        LogicaCliente logic = new LogicaCliente();
+        JFreeChart grafica = logic.graficaGenero();
+        ChartPanel chartPanel = new ChartPanel( grafica );   
+        chartPanel.setPreferredSize(new  java.awt.Dimension( 560 , 367 ) );  
+        chartPanel.setVisible(true);
+        chartPanel.setBounds(550, 200, 300, 200);
+        chartPanel.setVisible(true);
+        this.panel3.add(chartPanel);
         
         
         
@@ -375,7 +413,6 @@ public class VistaAdmin {
         table.setPreferredSize(null);
         table.setFillsViewportHeight(true);
         
-        LogicaCliente logic = new LogicaCliente();
         table.setModel(logic.listadoOficial());
         
         
@@ -397,6 +434,7 @@ public class VistaAdmin {
                 int columnaActual = table.getSelectedColumn();
                 if(columnaActual  == cantidadColumnas){
                     LogicaCliente logic = new LogicaCliente();
+                     
                     
                     
                     if(logic.eliminar(codSeleccionado)){
@@ -405,6 +443,9 @@ public class VistaAdmin {
                     }else{
                          JOptionPane.showMessageDialog(null, "No se pudo eliminar");
                     }
+                    
+                    JFreeChart grafica = logic.graficaGenero();
+                     chartPanel.setChart(grafica); 
                     
                 }
             }
@@ -437,7 +478,7 @@ public class VistaAdmin {
         btnCrear2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 
-          new VistaAdminCrearCliente(table);
+          new VistaAdminCrearCliente(table,chartPanel);
 
             }
         }
@@ -454,11 +495,16 @@ public class VistaAdmin {
                 
                 
                 
-                
+             
                
                 LogicaCliente logic = new LogicaCliente();
                 logic.cargaMasiva();
                 table.setModel(logic.listadoOficial());
+                
+                
+               JFreeChart grafica = logic.graficaGenero();
+               chartPanel.setChart(grafica); 
+                
             }
         }
         );
@@ -480,11 +526,12 @@ public class VistaAdmin {
                 if(buscar==null){
                     JOptionPane.showMessageDialog(null, "No se selecciono producto");
                 }else{
-                    new VistaAdminActualizarCliente(buscar,table);
+                    new VistaAdminActualizarCliente(buscar,table,chartPanel);
                 }
             
                 
                 
+
             }
         }
         );
@@ -510,7 +557,11 @@ public class VistaAdmin {
 
         btnExportarListado.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new VistaAdminAutenticacion();
+                
+               
+                LogicaCliente logic = new LogicaCliente();
+                logic.exportarListadoPdf();
+                table.setModel(logic.listadoOficial());
             }
         }
         );
@@ -522,19 +573,29 @@ public class VistaAdmin {
         this.panel3.repaint();
 
     }
-
+    
+    
+    //------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
+    //------------------------------------------------------------------------------------------------------------------
     public void GenerarVendedor() {
 
         
+        LogicaVendedores logic = new LogicaVendedores();
         
-        
-        
+        JFreeChart grafica = logic.top3Ventas("Top 3 Vendedores Ventas");
+        ChartPanel chartPanel = new ChartPanel( grafica );   
+        chartPanel.setPreferredSize(new  java.awt.Dimension( 560 , 367 ) );  
+        chartPanel.setVisible(true);
+        chartPanel.setBounds(550, 200, 300, 200);
+        chartPanel.setVisible(true);
+        this.panel4.add(chartPanel);
 
         JTable table = new JTable();
         table.setPreferredSize(null);
         table.setFillsViewportHeight(true);
         
-        LogicaVendedores logic = new LogicaVendedores();
+       
         table.setModel(logic.listadoOficial());
         
         
@@ -561,6 +622,8 @@ public class VistaAdmin {
                     if(logic.eliminar(codSeleccionado)){
                         table.setModel(logic.listadoOficial());
                         JOptionPane.showMessageDialog(null, "Vendedor Eliminado");
+                        JFreeChart grafica = logic.top3Ventas("Top 3 Vendedores Ventas");
+                        chartPanel.setChart(grafica); 
                     }else{
                          JOptionPane.showMessageDialog(null, "No se pudo eliminar");
                     }
@@ -585,7 +648,9 @@ public class VistaAdmin {
 
         btnCrear2.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new VistaAdminCrearVendedor(table);
+                new VistaAdminCrearVendedor(table,chartPanel);
+                JFreeChart grafica = logic.top3Ventas("Top 3 Vendedores Ventas");
+                chartPanel.setChart(grafica); 
             }
         }
         );
@@ -601,6 +666,8 @@ public class VistaAdmin {
                 LogicaVendedores logic = new LogicaVendedores();
                 logic.cargaMasiva();
                 table.setModel(logic.listadoOficial());
+                JFreeChart grafica = logic.top3Ventas("Top 3 Vendedores Ventas");
+                chartPanel.setChart(grafica); 
             }
         }
         );
@@ -614,15 +681,13 @@ public class VistaAdmin {
         btnActualizar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 
-               
-                
                 
                 LogicaVendedores logic  =  new LogicaVendedores();
                 Vendedores buscar = logic.buscarUno(vendedorSeleccionado);
                 if(buscar==null){
                     JOptionPane.showMessageDialog(null, "No se selecciono Vendedor");
                 }else{
-                    new VistaAdminActualizarVendedor(buscar,table);
+                    new VistaAdminActualizarVendedor(buscar,table,chartPanel);
                 }
             }
         }
@@ -637,6 +702,7 @@ public class VistaAdmin {
         btnEliminar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 new VistaAdminAutenticacion();
+                
             }
         }
         );
@@ -649,7 +715,11 @@ public class VistaAdmin {
 
         btnExportarListado.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new VistaAdminAutenticacion();
+               LogicaVendedores logic  =  new LogicaVendedores();
+               logic.exportarListadoPdf();
+               
+               JFreeChart grafica = logic.top3Ventas("Top 3 Vendedores Ventas");
+               chartPanel.setChart(grafica); 
             }
         }
         );
@@ -658,6 +728,9 @@ public class VistaAdmin {
         this.panel4.setLayout(null);
         this.panel4.add(btnExportarListado);
 
+       
+        
+        
         this.panel4.repaint();
 
     }

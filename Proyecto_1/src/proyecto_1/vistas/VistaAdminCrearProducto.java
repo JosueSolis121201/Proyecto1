@@ -9,8 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import org.jfree.chart.ChartPanel;
 import proyecto_1.logica.LogicaProductos;
-import proyecto_1.logica.LogicaSucursales;
 
 
 public class VistaAdminCrearProducto {
@@ -18,17 +18,19 @@ public class VistaAdminCrearProducto {
     
     private JFrame principal;
     private JTable tabla;
+   private ChartPanel panelG;
 
     
 
-    
-    public VistaAdminCrearProducto(JTable tabla) {
+     
+    public VistaAdminCrearProducto(JTable tabla,ChartPanel panelGrafica) {
         
         this.principal = new JFrame();                
         this.principal.setVisible(true);
         this.principal.setBounds(0, 0, 500, 650);
         this.tabla = tabla;
-        
+        this.panelG = panelGrafica;
+    
         this.Crear();
     }
     
@@ -115,6 +117,8 @@ public class VistaAdminCrearProducto {
                     JOptionPane.showMessageDialog(null, "No se pudo crear usuario");
                 }
                 tabla.setModel(logic.listadoOficial()); 
+                 panelG.setChart(logic.top3Ventas("Top 3 Ventas"));
+
         
         
         

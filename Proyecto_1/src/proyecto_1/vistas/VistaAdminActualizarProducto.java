@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import org.jfree.chart.ChartPanel;
 import proyecto_1.datos.Productos;
 import proyecto_1.logica.LogicaProductos;
 
@@ -16,14 +17,18 @@ public class VistaAdminActualizarProducto {
     private JFrame principal;
     Productos actual;
     JTable tabla;
+    private ChartPanel panelG;
 
-    public VistaAdminActualizarProducto(Productos actual,JTable tabla) {
+
+    public VistaAdminActualizarProducto(Productos actual,JTable tabla,ChartPanel panelGrafica) {
 
         this.principal = new JFrame();
         this.principal.setVisible(true);
         this.principal.setBounds(0, 0, 500, 650);
         this.actual = actual;
         this.tabla = tabla;
+        this.panelG = panelGrafica;
+
 
         this.Crear();
     }
@@ -85,12 +90,14 @@ public class VistaAdminActualizarProducto {
 
                 LogicaProductos logic = new LogicaProductos();
                 if (logic.actualizar(Integer.parseInt(texto2.getText()), texto.getText(), texto3.getText(),
-                        Integer.parseInt(texto4.getText()), Integer.parseInt(texto5.getText()))) {
+                        Integer.parseInt(texto4.getText()), Double.parseDouble(texto5.getText()))) {
                     JOptionPane.showMessageDialog(null, "Producto Actualizado");
                 } else {
                     JOptionPane.showMessageDialog(null, "Error al actualizar producto");
                 }
                 tabla.setModel(logic.listadoOficial());
+                panelG.setChart(logic.top3Ventas("Top 3 Producots"));
+               
             }
         });
 

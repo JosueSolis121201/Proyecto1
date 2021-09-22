@@ -1,8 +1,10 @@
 
 package proyecto_1.datos;
 
+import java.io.Serializable;
 
-public class Sucursales {
+
+public class Sucursales implements Serializable{
     
     private int codigo;
     private String nombre;

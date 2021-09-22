@@ -9,7 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import proyecto_1.logica.LogicaCliente;
+import org.jfree.chart.ChartPanel;
 import proyecto_1.logica.LogicaVendedores;
 
 
@@ -21,17 +21,19 @@ public class VistaAdminCrearVendedor {
     
     private JFrame principal;
    private JTable tabla;
+   private ChartPanel panelG;
 
     
 
     
-    public VistaAdminCrearVendedor(JTable tabla) {
+    public VistaAdminCrearVendedor(JTable tabla,ChartPanel panelGrafica) {
         
         this.principal = new JFrame();
         this.principal.setVisible(true);
         this.principal.setBounds(0, 0, 500, 650);
          this.tabla = tabla;
-
+        
+         this.panelG = panelGrafica;
     
         
         this.Crear();
@@ -129,8 +131,7 @@ public class VistaAdminCrearVendedor {
                     JOptionPane.showMessageDialog(null, "No se pudo crear Vendedor");
                 }
                 tabla.setModel(logic.listadoOficial()); 
-        
-        
+                panelG.setChart(logic.top3Ventas("Top 3 Ventas"));
         
         
             }

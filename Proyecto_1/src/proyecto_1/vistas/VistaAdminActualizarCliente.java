@@ -14,6 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
+import org.jfree.chart.ChartPanel;
 import proyecto_1.datos.Clientes;
 import proyecto_1.datos.Productos;
 import proyecto_1.logica.LogicaCliente;
@@ -38,15 +39,19 @@ public class VistaAdminActualizarCliente {
 
     Clientes actual;
     JTable tabla; 
+    private ChartPanel panelG;
+
 
     
-    public VistaAdminActualizarCliente(Clientes actual,JTable tabla) {
+    public VistaAdminActualizarCliente(Clientes actual,JTable tabla,ChartPanel panelGrafica) {
         
         this.principal = new JFrame();
         this.principal.setVisible(true);
         this.principal.setBounds(0, 0, 500, 650);
         this.actual = actual;
         this.tabla = tabla;
+        this.panelG = panelGrafica;
+
         
         this.Crear();
     }
@@ -128,7 +133,8 @@ public class VistaAdminActualizarCliente {
                     JOptionPane.showMessageDialog(null, "Error al actualizar Cliente");
                 }
                 tabla.setModel(logic.listadoOficial());
-                
+                panelG.setChart(logic.graficaGenero());
+                    
                 
                 
                 

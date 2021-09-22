@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import org.jfree.chart.ChartPanel;
 import proyecto_1.logica.LogicaCliente;
 import proyecto_1.logica.LogicaProductos;
 
@@ -18,16 +19,18 @@ public class VistaAdminCrearCliente {
     
     private JTable tabla;
     private JFrame principal;
+    private ChartPanel panelG;
 
     
 
     
-    public VistaAdminCrearCliente(JTable tabla) {
+    public VistaAdminCrearCliente(JTable tabla,ChartPanel panelGrafica) {
         
         this.principal = new JFrame();
         this.principal.setVisible(true);
         this.principal.setBounds(0, 0, 500, 650);
          this.tabla = tabla;
+         this.panelG = panelGrafica;
 
     
         
@@ -111,7 +114,8 @@ public class VistaAdminCrearCliente {
                     JOptionPane.showMessageDialog(null, "No se pudo crear usuario");
                 }
                 tabla.setModel(logic.listadoOficial()); 
-        
+                 panelG.setChart(logic.graficaGenero());
+       
         
         
         

@@ -1,8 +1,10 @@
 
 package proyecto_1.datos;
 
+import java.io.Serializable;
 
-public class Clientes {
+
+public class Clientes implements Serializable {
     //Código, Nombre, NIT, Correo y Género
     private int codigo;
     private String nombre;

@@ -9,6 +9,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import org.jfree.chart.ChartPanel;
 import proyecto_1.datos.Vendedores;
 import proyecto_1.logica.LogicaCliente;
 import proyecto_1.logica.LogicaVendedores;
@@ -22,18 +23,19 @@ public class VistaAdminActualizarVendedor {
     private JFrame principal;
     Vendedores actual;
     JTable tabla; 
+   private ChartPanel panelG;
 
     
 
     
-    public VistaAdminActualizarVendedor(Vendedores actual,JTable tabla) {
+    public VistaAdminActualizarVendedor(Vendedores actual,JTable tabla,ChartPanel panelGrafica) {
         
         this.principal = new JFrame();
         this.principal.setVisible(true);
         this.principal.setBounds(0, 0, 500, 650);
          this.actual = actual;
          this.tabla = tabla;
-
+this.panelG = panelGrafica;
     
         
         this.Crear();
@@ -130,7 +132,7 @@ public class VistaAdminActualizarVendedor {
                     JOptionPane.showMessageDialog(null, "Error al actualizar Vendedor");
                 }
                 tabla.setModel(logic.listadoOficial());
-                
+                panelG.setChart(logic.top3Ventas("Top 3 Ventas"));
                 
                 
                 
