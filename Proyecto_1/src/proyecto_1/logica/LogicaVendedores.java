@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JComboBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -30,11 +31,17 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import proyecto_1.Proyecto_1;
+import proyecto_1.datos.Clientes;
+import proyecto_1.datos.ProductoVenta;
 import proyecto_1.datos.Vendedores;
+import proyecto_1.datos.Ventas;
 
 public class LogicaVendedores {
+
     
-    public  void descargarDatos(String nombre,Object guardar) {
+   
+
+    public void descargarDatos(String nombre, Object guardar) {
         try {
             ObjectOutputStream serial = new ObjectOutputStream(new FileOutputStream(nombre));
             serial.writeObject(guardar);
@@ -43,7 +50,7 @@ public class LogicaVendedores {
             System.out.println(ex);
         }
     }
-    
+
     public JFreeChart top3Ventas(String Titulo) {
         final DefaultCategoryDataset dataset
                 = new DefaultCategoryDataset();
@@ -53,33 +60,31 @@ public class LogicaVendedores {
 
         Vendedores top[] = new Vendedores[Proyecto_1.vendedor.length];
         for (int i = 0; i < Proyecto_1.vendedor.length; i++) {
-           if(Proyecto_1.vendedor[i]!=null){
-               top[i] =Proyecto_1.vendedor[i];
-           }
-            
+            if (Proyecto_1.vendedor[i] != null) {
+                top[i] = Proyecto_1.vendedor[i];
+            }
+
         }
-        for(int j = 0; j < Proyecto_1.vendedor.length; j++){
-            for (int i = 0; i < Proyecto_1.vendedor.length-1; i++) {
-                if(top[i]==null){
+        for (int j = 0; j < Proyecto_1.vendedor.length; j++) {
+            for (int i = 0; i < Proyecto_1.vendedor.length - 1; i++) {
+                if (top[i] == null) {
                     break;
-                }else{
-                    if(top[i+1]!=null){
-                        if(top[i].getVentas()<top[i+1].getVentas()){
+                } else {
+                    if (top[i + 1] != null) {
+                        if (top[i].getVentas() < top[i + 1].getVentas()) {
                             Vendedores actual = top[i];
-                            top[i] = top[i+1];
-                            top[i+1] = actual;
+                            top[i] = top[i + 1];
+                            top[i + 1] = actual;
 
                         }
                     }
                 }
             }
         }
-        
-        
-        
+
         for (int j = 0; j < 3; j++) {
             if (top[j] != null) {
-                
+
                 dataset.addValue(top[j].getVentas(), top[j].getNombre(), ventas);
             }
         }
@@ -109,21 +114,17 @@ public class LogicaVendedores {
         return resultado;
     }
 
-    public boolean loginUsuario(String codigo, String contraseña) {
-        boolean resultado = false;
+    public Vendedores loginUsuario(String codigo, String contraseña) {
         for (int i = 0; i < Proyecto_1.vendedor.length; i++) {
             Vendedores vendedorActual = Proyecto_1.vendedor[i];
             if (vendedorActual != null) {
-                if (codigo.equals(vendedorActual.getCodigo()) && contraseña.equals(vendedorActual.getPassword())) {
+                if (codigo.equals(vendedorActual.getCodigo()+"") && contraseña.equals(vendedorActual.getPassword())) {
 
-                    resultado = true;
-                } else {
-
-                    resultado = false;
-                }
+                    return vendedorActual;
+                } 
             }
         }
-        return resultado;
+        return null;
     }
 
     public void exportarListadoPdf() {
@@ -187,7 +188,7 @@ public class LogicaVendedores {
             }
 
         }
-        this.descargarDatos("vendedor",Proyecto_1.vendedor );
+        this.descargarDatos("vendedor", Proyecto_1.vendedor);
         return modelo;
     }
 
@@ -298,6 +299,8 @@ public class LogicaVendedores {
         return null;
     }
 
+    
+    
     public boolean eliminar(int codigo) {
 
         for (int i = 0; i < Proyecto_1.vendedor.length; i++) {

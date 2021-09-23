@@ -27,7 +27,7 @@ import proyecto_1.Proyecto_1;
 import proyecto_1.datos.Sucursales;
 
 public class LogicaSucursales {
- public  void descargarDatos(String nombre,Object guardar) {
+    public void descargarDatos(String nombre, Object guardar) {
         try {
             ObjectOutputStream serial = new ObjectOutputStream(new FileOutputStream(nombre));
             serial.writeObject(guardar);
@@ -36,9 +36,9 @@ public class LogicaSucursales {
             System.out.println(ex);
         }
     }
+
     public void exportarListadoPdf() {
-        
-        
+
         Document documento = new Document();
         FileOutputStream ficheroPdf = null;
         try {
@@ -62,17 +62,14 @@ public class LogicaSucursales {
 
                 if (Proyecto_1.sucursal[i] != null) {
 
-                    
-                String[] fila={Proyecto_1.sucursal[i].getCodigo()+ "",Proyecto_1.sucursal[i].getNombre(),
-                Proyecto_1.sucursal[i].getDireccion(),Proyecto_1.sucursal[i].getCorreo(),
-                Proyecto_1.sucursal[i].getTelefono()+""};
-                    
+                    String[] fila = {Proyecto_1.sucursal[i].getCodigo() + "", Proyecto_1.sucursal[i].getNombre(),
+                        Proyecto_1.sucursal[i].getDireccion(), Proyecto_1.sucursal[i].getCorreo(),
+                        Proyecto_1.sucursal[i].getTelefono() + ""};
+
                     for (String cada : fila) {
                         tabla.addCell(cada);
-                        
-                    }
 
-                    
+                    }
 
                 }
 
@@ -83,60 +80,40 @@ public class LogicaSucursales {
         } catch (Exception ex) {
             Logger.getLogger(Proyecto_1.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
     }
 
     public DefaultTableModel listadoOficial() {
-        String [] header={"codigo","nombre","direccion","correo","telefono","Accion"};
-        String [][] data={};
-        DefaultTableModel modelo = new DefaultTableModel(data,header);
-        
+        String[] header = {"codigo", "nombre", "direccion", "correo", "telefono", "Accion"};
+        String[][] data = {};
+        DefaultTableModel modelo = new DefaultTableModel(data, header);
 
-        for(int i=0;i<Proyecto_1.sucursal.length;i++){
-        
-            if(Proyecto_1.sucursal[i]!=null){
-        
-                String[] fila={Proyecto_1.sucursal[i].getCodigo()+ "",Proyecto_1.sucursal[i].getNombre(),
-                Proyecto_1.sucursal[i].getDireccion(),Proyecto_1.sucursal[i].getCorreo(),
-                Proyecto_1.sucursal[i].getTelefono()+"","Eliminar"};
-                modelo.addRow(fila);        
+        for (int i = 0; i < Proyecto_1.sucursal.length; i++) {
+
+            if (Proyecto_1.sucursal[i] != null) {
+
+                String[] fila = {Proyecto_1.sucursal[i].getCodigo() + "", Proyecto_1.sucursal[i].getNombre(),
+                    Proyecto_1.sucursal[i].getDireccion(), Proyecto_1.sucursal[i].getCorreo(),
+                    Proyecto_1.sucursal[i].getTelefono() + "", "Eliminar"};
+                modelo.addRow(fila);
 
             }
-        
-        
+
         }
-                this.descargarDatos("sucursal",Proyecto_1.sucursal );
+        this.descargarDatos("sucursal", Proyecto_1.sucursal);
 
         return modelo;
     }
 
     public void cargaMasiva() {
-        
-        
-        
-        
+
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         FileNameExtensionFilter filter = new FileNameExtensionFilter("json", "json", "JSON");
         jfc.addChoosableFileFilter(filter);
         int returnValue = jfc.showOpenDialog(null);
-        
+
         boolean repetido = false;
-        
+
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             try {
                 File selectedFile = jfc.getSelectedFile();
@@ -144,28 +121,28 @@ public class LogicaSucursales {
                 JSONArray arregloJSON = (JSONArray) obj;
                 for (Object cada : arregloJSON) {
                     JSONObject cadaConvertido = (JSONObject) cada;
-                    
+
                     int codigo = Integer.parseInt(cadaConvertido.get("codigo") + "");
                     String nombre = cadaConvertido.get("nombre") + "";
-                    String direccion =cadaConvertido.get("direccion") + "";
+                    String direccion = cadaConvertido.get("direccion") + "";
                     String correo = cadaConvertido.get("correo") + "";
                     int telefono = Integer.parseInt(cadaConvertido.get("telefono") + "");
 
-                    if(this.crear(codigo, nombre, direccion, correo, telefono)==false){
-                        repetido=true;
+                    if (this.crear(codigo, nombre, direccion, correo, telefono) == false) {
+                        repetido = true;
                     }
                 }
             } catch (Exception ex) {
                 System.out.println("Error al leer archivo vendedores");
             }
         }
-        
-        if(repetido == true){
-             JOptionPane.showMessageDialog(null, "Hay Datos Con Codigos Repetidos En El Archivo");
+
+        if (repetido == true) {
+            JOptionPane.showMessageDialog(null, "Hay Datos Con Codigos Repetidos En El Archivo");
         }
 
     }
-    
+
     public boolean unico(int codigo) {
         for (int i = 0; i < Proyecto_1.sucursal.length; i++) {
 
@@ -196,8 +173,6 @@ public class LogicaSucursales {
         return false;
     }
 
-    
-
     public boolean actualizar(int codigo, String nombre, String direccion, String correo, int telefono) {
 
         for (int i = 0; i < Proyecto_1.sucursal.length; i++) {
@@ -221,6 +196,7 @@ public class LogicaSucursales {
         return false;
 
     }
+
     public Sucursales buscarUno(int codigo) {
 
         for (int i = 0; i < Proyecto_1.sucursal.length; i++) {
@@ -236,6 +212,7 @@ public class LogicaSucursales {
         }
         return null;
     }
+
     public boolean eliminar(int codigo) {
 
         for (int i = 0; i < Proyecto_1.sucursal.length; i++) {

@@ -27,6 +27,11 @@ public class Productos implements Serializable{
 
     }
 
+    @Override
+    public String toString(){
+        return this.codigo+"-"+this.nombre;
+    }
+    
     public int getCodigo() {
         return codigo;
     }

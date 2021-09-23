@@ -36,7 +36,7 @@ public class LogicaCliente {
 
         
     
-    public  void descargarDatos(String nombre,Object guardar) {
+    public void descargarDatos(String nombre, Object guardar) {
         try {
             ObjectOutputStream serial = new ObjectOutputStream(new FileOutputStream(nombre));
             serial.writeObject(guardar);
@@ -45,23 +45,9 @@ public class LogicaCliente {
             System.out.println(ex);
         }
     }
-    
-     
-     
-     
-     
-     
-     
-     
-     
-    
+
     public void exportarListadoPdf() {
-        
-        
-       
-        
-        
-        
+
         Document documento = new Document();
         FileOutputStream ficheroPdf = null;
         try {
@@ -80,24 +66,19 @@ public class LogicaCliente {
                 System.out.println(cada);
                 tabla.addCell(cada);
             }
-            
-            
-            
-            
+
             for (int i = 0; i < Proyecto_1.cliente.length; i++) {
 
                 if (Proyecto_1.cliente[i] != null) {
 
-                      String[] fila={Proyecto_1.cliente[i].getCodigo()+ "",Proyecto_1.cliente[i].getNombre(),
-            Proyecto_1.cliente[i].getNit()+"",Proyecto_1.cliente[i].getCorreo(),
-            Proyecto_1.cliente[i].getGenero()+""};
-                    
+                    String[] fila = {Proyecto_1.cliente[i].getCodigo() + "", Proyecto_1.cliente[i].getNombre(),
+                        Proyecto_1.cliente[i].getNit() + "", Proyecto_1.cliente[i].getCorreo(),
+                        Proyecto_1.cliente[i].getGenero() + ""};
+
                     for (String cada : fila) {
                         tabla.addCell(cada);
-                        
-                    }
 
-                    
+                    }
 
                 }
 
@@ -108,50 +89,40 @@ public class LogicaCliente {
         } catch (Exception ex) {
             Logger.getLogger(Proyecto_1.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
-        
-        
-        
 
-}
+    }
 
-public DefaultTableModel listadoOficial() {
-    String [] header={"codigo","nombre","nit","correo","genero","Accion"};
-    String [][] data={};
-    DefaultTableModel modelo = new DefaultTableModel(data,header);
-    
+    public DefaultTableModel listadoOficial() {
+        String[] header = {"codigo", "nombre", "nit", "correo", "genero", "Accion"};
+        String[][] data = {};
+        DefaultTableModel modelo = new DefaultTableModel(data, header);
 
-    for(int i=0;i<Proyecto_1.cliente.length;i++){
-    
-        if(Proyecto_1.cliente[i]!=null){
-    
-            String[] fila={Proyecto_1.cliente[i].getCodigo()+ "",Proyecto_1.cliente[i].getNombre(),
-            Proyecto_1.cliente[i].getNit()+"",Proyecto_1.cliente[i].getCorreo(),
-            Proyecto_1.cliente[i].getGenero()+"","Eliminar"};
-            modelo.addRow(fila);        
+        for (int i = 0; i < Proyecto_1.cliente.length; i++) {
+
+            if (Proyecto_1.cliente[i] != null) {
+
+                String[] fila = {Proyecto_1.cliente[i].getCodigo() + "", Proyecto_1.cliente[i].getNombre(),
+                    Proyecto_1.cliente[i].getNit() + "", Proyecto_1.cliente[i].getCorreo(),
+                    Proyecto_1.cliente[i].getGenero() + "", "Eliminar"};
+                modelo.addRow(fila);
+
+            }
 
         }
-    
-    
+        this.descargarDatos("cliente", Proyecto_1.cliente);
+
+        return modelo;
     }
-                        this.descargarDatos("cliente",Proyecto_1.cliente );
 
-    return modelo;
-}
+    public void cargaMasiva() {
 
-public void cargaMasiva() {
-    
-    
-    
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         FileNameExtensionFilter filter = new FileNameExtensionFilter("json", "json", "JSON");
         jfc.addChoosableFileFilter(filter);
         int returnValue = jfc.showOpenDialog(null);
-        
+
         boolean repetido = false;
-        
+
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             try {
                 File selectedFile = jfc.getSelectedFile();
@@ -159,167 +130,153 @@ public void cargaMasiva() {
                 JSONArray arregloJSON = (JSONArray) obj;
                 for (Object cada : arregloJSON) {
                     JSONObject cadaConvertido = (JSONObject) cada;
-                    
+
                     int codigo = Integer.parseInt(cadaConvertido.get("codigo") + "");
                     String nombre = cadaConvertido.get("nombre") + "";
-                    int nit = Integer.parseInt(cadaConvertido.get("nit") + "");
+                    String nit = (cadaConvertido.get("nit") + "");
                     String correo = cadaConvertido.get("correo") + "";
                     String genero = cadaConvertido.get("genero") + "";
 
-                    if(this.crear(codigo, nombre, nit, correo, genero)==false){
-                        repetido=true;
+                    if (this.crear(codigo, nombre, nit, correo, genero) == false) {
+                        repetido = true;
                     }
                 }
             } catch (Exception ex) {
                 System.out.println("Error al leer archivo vendedores");
             }
         }
-        
-        if(repetido == true){
-             JOptionPane.showMessageDialog(null, "Hay Datos Con Codigos Repetidos En El Archivo");
+
+        if (repetido == true) {
+            JOptionPane.showMessageDialog(null, "Hay Datos Con Codigos Repetidos En El Archivo");
         }
 
-}
-
-public boolean unico(int codigo) {
-    for (int i = 0; i < Proyecto_1.cliente.length; i++) {
-
-        if (Proyecto_1.cliente[i] != null) {
-            if (Proyecto_1.cliente[i].getCodigo() == codigo) {
-                return false;
-            }
-        }
     }
 
-    return true;
-}
+    public boolean unico(int codigo) {
+        for (int i = 0; i < Proyecto_1.cliente.length; i++) {
 
-public boolean crear(int codigo,String nombre,int nit,String correo,String genero) {
-    Clientes nuevaCliente = new Clientes(codigo, nombre, nit, correo, genero);
+            if (Proyecto_1.cliente[i] != null) {
+                if (Proyecto_1.cliente[i].getCodigo() == codigo) {
+                    return false;
+                }
+            }
+        }
 
-    if (this.unico(codigo) == false) {
+        return true;
+    }
+
+    public boolean crear(int codigo, String nombre, String nit, String correo, String genero) {
+        Clientes nuevaCliente = new Clientes(codigo, nombre, nit, correo, genero);
+
+        if (this.unico(codigo) == false) {
+            return false;
+        }
+
+        for (int i = 0; i < Proyecto_1.cliente.length; i++) {
+
+            if (Proyecto_1.cliente[i] == null) {
+                Proyecto_1.cliente[i] = nuevaCliente;
+                return true;
+            }
+        }
         return false;
     }
 
-    for (int i = 0; i < Proyecto_1.cliente.length; i++) {
+    public boolean actualizar(int codigo, String nombre, String nit, String correo, String genero) {
 
-        if (Proyecto_1.cliente[i] == null) {
-            Proyecto_1.cliente[i] = nuevaCliente;
-            return true;
-        }
-    }
-    return false;
-}
+        for (int i = 0; i < Proyecto_1.cliente.length; i++) {
 
+            if (Proyecto_1.cliente[i] != null) {
+                if (Proyecto_1.cliente[i].getCodigo() == codigo) {
+                    Proyecto_1.cliente[i].setNombre(nombre);
+                    Proyecto_1.cliente[i].setNit(nit);
+                    Proyecto_1.cliente[i].setCorreo(correo);
+                    Proyecto_1.cliente[i].setGenero(genero);
 
+                    return true;
 
-public boolean actualizar(int codigo,String nombre,int nit,String correo,String genero) {
-
-    for (int i = 0; i < Proyecto_1.cliente.length; i++) {
-
-        if (Proyecto_1.cliente[i] != null) {
-            if (Proyecto_1.cliente[i].getCodigo() == codigo) {
-                Proyecto_1.cliente[i].setNombre(nombre);
-                Proyecto_1.cliente[i].setNit(nit);
-                Proyecto_1.cliente[i].setCorreo(correo);
-                Proyecto_1.cliente[i].setGenero(genero);
-
-                return true;
+                }
 
             }
 
         }
 
+        return false;
+
     }
 
-    return false;
+    public Clientes buscarUno(int codigo) {
 
-}
-public Clientes buscarUno(int codigo) {
+        for (int i = 0; i < Proyecto_1.cliente.length; i++) {
 
-    for (int i = 0; i < Proyecto_1.cliente.length; i++) {
+            if (Proyecto_1.cliente[i] != null) {
 
-        if (Proyecto_1.cliente[i] != null) {
+                if (codigo == Proyecto_1.cliente[i].getCodigo()) {
 
-            if (codigo == Proyecto_1.cliente[i].getCodigo()) {
+                    return Proyecto_1.cliente[i];
 
-                return Proyecto_1.cliente[i];
-
+                }
             }
         }
+        return null;
     }
-    return null;
-}
-public boolean eliminar(int codigo) {
 
-    for (int i = 0; i < Proyecto_1.cliente.length; i++) {
+    public boolean eliminar(int codigo) {
 
-        if (Proyecto_1.cliente[i] != null) {
+        for (int i = 0; i < Proyecto_1.cliente.length; i++) {
 
-            if (codigo == Proyecto_1.cliente[i].getCodigo()) {
+            if (Proyecto_1.cliente[i] != null) {
 
-                Proyecto_1.cliente[i] = null;
-                return true;
+                if (codigo == Proyecto_1.cliente[i].getCodigo()) {
 
+                    Proyecto_1.cliente[i] = null;
+                    return true;
+
+                }
             }
         }
+        return false;
     }
-    return false;
-}
 
-
-
-
-     public JFreeChart graficaGenero(){
-         
+    public JFreeChart graficaGenero() {
 
         DefaultPieDataset dataset = new DefaultPieDataset();
-       
-       
+
         Clientes top[] = new Clientes[Proyecto_1.cliente.length];
-        double hombre=0;
-        double mujer=0;
-        double total=0;
-        
+        double hombre = 0;
+        double mujer = 0;
+        double total = 0;
+
         for (int i = 0; i < Proyecto_1.cliente.length; i++) {
-           Clientes actual = Proyecto_1.cliente[i];
-            
-            
-           if(actual!=null){
-               total++;
-               if(actual.getGenero().toLowerCase().equals("m")){
-               
-                   mujer++;
-               }else{
-               hombre++;
-               }
-               
-               
-               top[i] =Proyecto_1.cliente[i];
-           }
-            
-        }
-        
-        
+            Clientes actual = Proyecto_1.cliente[i];
 
-         
-         
-        dataset.setValue( "Mujer" , mujer );  
-        dataset.setValue( "Hombre" , hombre );   
-         JFreeChart chart = ChartFactory.createPieChart(      
-         "Pie Hombres y Mujeres",  
-         dataset,         
-         true,           
-         true, 
-         true);
-        return chart;  
-         
-         
-         
-         
+            if (actual != null) {
+                total++;
+                if (actual.getGenero().toLowerCase().equals("m")) {
+
+                    mujer++;
+                } else {
+                    hombre++;
+                }
+
+                top[i] = Proyecto_1.cliente[i];
+            }
+
         }
 
-    
+        dataset.setValue("Mujer", mujer);
+        dataset.setValue("Hombre", hombre);
+        JFreeChart chart = ChartFactory.createPieChart(
+                "Pie Hombres y Mujeres",
+                dataset,
+                true,
+                true,
+                true);
+        return chart;
+
+    }
+
+
     
     
     

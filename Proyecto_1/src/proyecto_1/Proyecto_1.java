@@ -99,10 +99,11 @@ public class Proyecto_1 {
         cliente = new Clientes[100];
         vendedor = new Vendedores[400];
         venta = new Ventas[1000];*/
+        VistaAdminAutenticacion adminPrueba1=new VistaAdminAutenticacion();
         
-        
-        VistaVendedor adminPrueba = new VistaVendedor();
-        //VistaAdminAutenticacion adminPrueba1=new VistaAdminAutenticacion();
+       //VistaVendedor adminPrueba = new VistaVendedor(null);
+      //VistaAdmin a=new VistaAdmin();
+       // VistaAdminAutenticacion adminPrueba1=new VistaAdminAutenticacion();
         //VistaAdminCrear a=new VistaAdminCrear();
         //VistaAdminActualizar a=new VistaAdminActualizar();
         // VistaAdminCrearProducto a=new VistaAdminCrearProducto();

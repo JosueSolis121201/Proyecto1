@@ -7,9 +7,12 @@ import java.awt.event.KeyEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
+import proyecto_1.logica.LogicaVendedores;
 
 
 public class VistaAdminAutenticacion {
@@ -32,11 +35,7 @@ public class VistaAdminAutenticacion {
     public void Autenticar() {
         JButton btnIniciarSesion = new JButton("Iniciar Sesión");
 
-        btnIniciarSesion .addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                System.out.println("Auth");
-            }
-        });
+       
         
         
         
@@ -70,6 +69,19 @@ public class VistaAdminAutenticacion {
         this.principal.add(labe3);
         
         
+         btnIniciarSesion .addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                LogicaVendedores ve =  new LogicaVendedores();
+                if(ve.loginAdmin(texto2.getText(), texto.getText())){
+                    new VistaAdmin();
+                }else if(ve.loginUsuario(texto2.getText(), texto.getText())!=null){
+                    new VistaVendedor(ve.loginUsuario(texto2.getText(), texto.getText()));
+                }else{
+                     JOptionPane.showMessageDialog(null, "Contraseña Incorrecta");
+                }
+            }
+        });
+         this.principal.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         
     }
 

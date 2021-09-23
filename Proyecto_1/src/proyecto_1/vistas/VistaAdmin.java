@@ -77,7 +77,7 @@ public class VistaAdmin {
         this.GenerarClientes();
         this.GenerarVendedor();
 
-        this.principal.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+       
         this.principal.repaint();
 
 

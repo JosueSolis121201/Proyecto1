@@ -8,10 +8,10 @@ public class Clientes implements Serializable {
     //Código, Nombre, NIT, Correo y Género
     private int codigo;
     private String nombre;
-    private int nit;
+    private String nit;
     private String correo;
     private String genero;
-    public Clientes(int codigo,String nombre,int nit,String correo,String genero){
+    public Clientes(int codigo,String nombre,String nit,String correo,String genero){
         this.codigo=codigo;
         this.nombre=nombre;
         this.nit=nit;
@@ -22,7 +22,12 @@ public class Clientes implements Serializable {
     public int getCodigo() {
         return codigo;
     }
-
+    
+    @Override
+    public String toString(){
+        return this.nit + " -- "+this.nombre;
+    }
+    
     public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
@@ -35,11 +40,11 @@ public class Clientes implements Serializable {
         this.nombre = nombre;
     }
 
-    public int getNit() {
+    public String getNit() {
         return nit;
     }
 
-    public void setNit(int nit) {
+    public void setNit(String nit) {
         this.nit = nit;
     }
 

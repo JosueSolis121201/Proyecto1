@@ -104,7 +104,7 @@ public class VistaAdminCrearCliente {
                 public void actionPerformed(ActionEvent e) {
                 LogicaCliente logic = new LogicaCliente();
                 int codigo=Integer.parseInt(texto2.getText());
-                int NIT=Integer.parseInt(texto3.getText());
+                String NIT=(texto3.getText());
 
 
                 

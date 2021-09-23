@@ -126,7 +126,7 @@ public class VistaAdminActualizarCliente {
                 
 
                 LogicaCliente logic = new LogicaCliente();
-                if (logic.actualizar(Integer.parseInt(texto2.getText()+""), texto.getText(),Integer.parseInt(texto3.getText()+""),
+                if (logic.actualizar(Integer.parseInt(texto2.getText()+""), texto.getText(),(texto3.getText()+""),
                         texto4.getText(), texto5.getText())) {
                     JOptionPane.showMessageDialog(null, "Cliente Actualizado");
                 } else {

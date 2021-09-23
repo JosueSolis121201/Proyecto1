@@ -31,8 +31,8 @@ import proyecto_1.datos.Productos;
 
 
 public class LogicaProductos {
-    
-     public  void descargarDatos(String nombre,Object guardar) {
+
+    public void descargarDatos(String nombre, Object guardar) {
         try {
             ObjectOutputStream serial = new ObjectOutputStream(new FileOutputStream(nombre));
             serial.writeObject(guardar);
@@ -51,33 +51,31 @@ public class LogicaProductos {
 
         Productos top[] = new Productos[Proyecto_1.producto.length];
         for (int i = 0; i < Proyecto_1.producto.length; i++) {
-           if(Proyecto_1.producto[i]!=null){
-               top[i] =Proyecto_1.producto[i];
-           }
-            
+            if (Proyecto_1.producto[i] != null) {
+                top[i] = Proyecto_1.producto[i];
+            }
+
         }
-        for(int j = 0; j < Proyecto_1.producto.length; j++){
-            for (int i = 0; i < Proyecto_1.producto.length-1; i++) {
-                if(top[i]==null){
+        for (int j = 0; j < Proyecto_1.producto.length; j++) {
+            for (int i = 0; i < Proyecto_1.producto.length - 1; i++) {
+                if (top[i] == null) {
                     break;
-                }else{
-                    if(top[i+1]!=null){
-                        if(top[i].getCantidad()<top[i+1].getCantidad()){
+                } else {
+                    if (top[i + 1] != null) {
+                        if (top[i].getCantidad() < top[i + 1].getCantidad()) {
                             Productos actual = top[i];
-                            top[i] = top[i+1];
-                            top[i+1] = actual;
+                            top[i] = top[i + 1];
+                            top[i + 1] = actual;
 
                         }
                     }
                 }
             }
         }
-        
-        
-        
+
         for (int j = 0; j < 3; j++) {
             if (top[j] != null) {
-                
+
                 dataset.addValue(top[j].getCantidad(), top[j].getNombre(), productos);
             }
         }
@@ -94,15 +92,8 @@ public class LogicaProductos {
         return barChart;
     }
 
-    
-    
-    
-    
-    
-    
     public void exportarListadoPdf() {
-        
-        
+
         Document documento = new Document();
         FileOutputStream ficheroPdf = null;
         try {
@@ -121,24 +112,19 @@ public class LogicaProductos {
                 System.out.println(cada);
                 tabla.addCell(cada);
             }
-            
-            
-            
-            
+
             for (int i = 0; i < Proyecto_1.producto.length; i++) {
 
                 if (Proyecto_1.producto[i] != null) {
 
-            String[] fila={Proyecto_1.producto[i].getCodigo()+ "",Proyecto_1.producto[i].getNombre(),
-            Proyecto_1.producto[i].getDescripcion(),Proyecto_1.producto[i].getCantidad()+"",
-            Proyecto_1.producto[i].getPrecio()+""};
-                    
+                    String[] fila = {Proyecto_1.producto[i].getCodigo() + "", Proyecto_1.producto[i].getNombre(),
+                        Proyecto_1.producto[i].getDescripcion(), Proyecto_1.producto[i].getCantidad() + "",
+                        Proyecto_1.producto[i].getPrecio() + ""};
+
                     for (String cada : fila) {
                         tabla.addCell(cada);
-                        
-                    }
 
-                    
+                    }
 
                 }
 
@@ -149,53 +135,41 @@ public class LogicaProductos {
         } catch (Exception ex) {
             Logger.getLogger(Proyecto_1.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
 
-}
+    }
 
-public DefaultTableModel listadoOficial() {
-    String [] header={"codigo","nombre","descripcion","cantidad","precio","Accion"};
-    String [][] data={};
-    DefaultTableModel modelo = new DefaultTableModel(data,header);
-    
+    public DefaultTableModel listadoOficial() {
+        String[] header = {"codigo", "nombre", "descripcion", "cantidad", "precio", "Accion"};
+        String[][] data = {};
+        DefaultTableModel modelo = new DefaultTableModel(data, header);
 
-    for(int i=0;i<Proyecto_1.producto.length;i++){
-    
-        if(Proyecto_1.producto[i]!=null){
-    
-            String[] fila={Proyecto_1.producto[i].getCodigo()+ "",Proyecto_1.producto[i].getNombre(),
-            Proyecto_1.producto[i].getDescripcion(),Proyecto_1.producto[i].getCantidad()+"",
-            Proyecto_1.producto[i].getPrecio()+"","Eliminar"};
-            modelo.addRow(fila);        
+        for (int i = 0; i < Proyecto_1.producto.length; i++) {
+
+            if (Proyecto_1.producto[i] != null) {
+
+                String[] fila = {Proyecto_1.producto[i].getCodigo() + "", Proyecto_1.producto[i].getNombre(),
+                    Proyecto_1.producto[i].getDescripcion(), Proyecto_1.producto[i].getCantidad() + "",
+                    Proyecto_1.producto[i].getPrecio() + "", "Eliminar"};
+                modelo.addRow(fila);
+
+            }
 
         }
-    
-    
+
+        this.descargarDatos("producto", Proyecto_1.producto);
+
+        return modelo;
     }
-    
-                    this.descargarDatos("producto",Proyecto_1.producto );
 
-    return modelo;
-}
+    public void cargaMasiva() {
 
-public void cargaMasiva() {
-    
-    
         JFileChooser jfc = new JFileChooser(FileSystemView.getFileSystemView().getHomeDirectory());
         FileNameExtensionFilter filter = new FileNameExtensionFilter("json", "json", "JSON");
         jfc.addChoosableFileFilter(filter);
         int returnValue = jfc.showOpenDialog(null);
-        
+
         boolean repetido = false;
-        
+
         if (returnValue == JFileChooser.APPROVE_OPTION) {
             try {
                 File selectedFile = jfc.getSelectedFile();
@@ -203,113 +177,113 @@ public void cargaMasiva() {
                 JSONArray arregloJSON = (JSONArray) obj;
                 for (Object cada : arregloJSON) {
                     JSONObject cadaConvertido = (JSONObject) cada;
-                    
+
                     int codigo = Integer.parseInt(cadaConvertido.get("codigo") + "");
                     String nombre = cadaConvertido.get("nombre") + "";
                     String descripcion = cadaConvertido.get("descripcion") + "";
                     int cantidad = Integer.parseInt(cadaConvertido.get("cantidad") + "");
                     double precio = Double.parseDouble(cadaConvertido.get("precio") + "");
 
-                    if(this.crear(codigo, nombre, descripcion, cantidad, precio)==false){
-                        repetido=true;
+                    if (this.crear(codigo, nombre, descripcion, cantidad, precio) == false) {
+                        repetido = true;
                     }
                 }
             } catch (Exception ex) {
                 System.out.println("Error al leer archivo productos");
             }
         }
-        
-        if(repetido == true){
-             JOptionPane.showMessageDialog(null, "Hay Datos Con Codigos Repetidos En El Archivo");
+
+        if (repetido == true) {
+            JOptionPane.showMessageDialog(null, "Hay Datos Con Codigos Repetidos En El Archivo");
         }
 
-}
-
-public boolean unico(int codigo) {
-    for (int i = 0; i < Proyecto_1.producto.length; i++) {
-
-        if (Proyecto_1.producto[i] != null) {
-            if (Proyecto_1.producto[i].getCodigo() == codigo) {
-                return false;
-            }
-        }
     }
 
-    return true;
-}
+    public boolean unico(int codigo) {
+        for (int i = 0; i < Proyecto_1.producto.length; i++) {
 
-public boolean crear(int codigo,String nombre,String descripcion,int cantidad,double precio) {
-    Productos nuevaProducto = new Productos(codigo, nombre, descripcion, cantidad, precio);
+            if (Proyecto_1.producto[i] != null) {
+                if (Proyecto_1.producto[i].getCodigo() == codigo) {
+                    return false;
+                }
+            }
+        }
 
-    if (this.unico(codigo) == false) {
+        return true;
+    }
+
+    public boolean crear(int codigo, String nombre, String descripcion, int cantidad, double precio) {
+        Productos nuevaProducto = new Productos(codigo, nombre, descripcion, cantidad, precio);
+
+        if (this.unico(codigo) == false) {
+            return false;
+        }
+
+        for (int i = 0; i < Proyecto_1.producto.length; i++) {
+
+            if (Proyecto_1.producto[i] == null) {
+                Proyecto_1.producto[i] = nuevaProducto;
+                return true;
+            }
+        }
         return false;
     }
 
-    for (int i = 0; i < Proyecto_1.producto.length; i++) {
+    public boolean actualizar(int codigo, String nombre, String descripcion, int cantidad, double precio) {
 
-        if (Proyecto_1.producto[i] == null) {
-            Proyecto_1.producto[i] = nuevaProducto;
-            return true;
-        }
-    }
-    return false;
-}
+        for (int i = 0; i < Proyecto_1.producto.length; i++) {
 
+            if (Proyecto_1.producto[i] != null) {
+                if (Proyecto_1.producto[i].getCodigo() == codigo) {
+                    Proyecto_1.producto[i].setNombre(nombre);
+                    Proyecto_1.producto[i].setDescripcion(descripcion);
+                    Proyecto_1.producto[i].setCantidad(cantidad);
+                    Proyecto_1.producto[i].setPrecio(precio);
 
+                    return true;
 
-public boolean actualizar(int codigo,String nombre,String descripcion,int cantidad,double precio) {
-
-    for (int i = 0; i < Proyecto_1.producto.length; i++) {
-
-        if (Proyecto_1.producto[i] != null) {
-            if (Proyecto_1.producto[i].getCodigo() == codigo) {
-                Proyecto_1.producto[i].setNombre(nombre);
-                Proyecto_1.producto[i].setDescripcion(descripcion);
-                Proyecto_1.producto[i].setCantidad(cantidad);
-                Proyecto_1.producto[i].setPrecio(precio);
-
-                return true;
+                }
 
             }
 
         }
 
+        return false;
+
     }
 
-    return false;
+    public Productos buscarUno(int codigo) {
 
-}
-public Productos buscarUno(int codigo) {
+        for (int i = 0; i < Proyecto_1.producto.length; i++) {
 
-    for (int i = 0; i < Proyecto_1.producto.length; i++) {
+            if (Proyecto_1.producto[i] != null) {
 
-        if (Proyecto_1.producto[i] != null) {
+                if (codigo == Proyecto_1.producto[i].getCodigo()) {
 
-            if (codigo == Proyecto_1.producto[i].getCodigo()) {
+                    return Proyecto_1.producto[i];
 
-                return Proyecto_1.producto[i];
-
+                }
             }
         }
+        return null;
     }
-    return null;
-}
-public boolean eliminar(int codigo) {
 
-    for (int i = 0; i < Proyecto_1.producto.length; i++) {
+    public boolean eliminar(int codigo) {
 
-        if (Proyecto_1.producto[i] != null) {
+        for (int i = 0; i < Proyecto_1.producto.length; i++) {
 
-            if (codigo == Proyecto_1.producto[i].getCodigo()) {
+            if (Proyecto_1.producto[i] != null) {
 
-                Proyecto_1.producto[i] = null;
-                return true;
+                if (codigo == Proyecto_1.producto[i].getCodigo()) {
 
+                    Proyecto_1.producto[i] = null;
+                    return true;
+
+                }
             }
         }
+        return false;
     }
-    return false;
-}
 
     
 }
