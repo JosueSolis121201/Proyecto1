@@ -192,7 +192,7 @@ public class LogicaGenerarVenta {
         Document documento = new Document();
         FileOutputStream ficheroPdf = null;
         try {
-            ficheroPdf = new FileOutputStream("ReporteFactura.pdf");
+            ficheroPdf = new FileOutputStream("ReporteFactura"+noVenta+".pdf");
             PdfWriter.getInstance(documento, ficheroPdf).setInitialLeading(20);
             documento.open();
             documento.add(new Paragraph("Factura",
@@ -239,8 +239,8 @@ public class LogicaGenerarVenta {
             
             
             documento.add(new Paragraph("\n"));
-            PdfPTable tabla = new PdfPTable(5);
-            String[] header = {"codigo", "nombre", "descripcion", "cantidad", "precio"};
+            PdfPTable tabla = new PdfPTable(6);
+            String[] header = {"codigo", "nombre", "descripcion", "cantidad", "precio","subtotal"};
             for (String cada : header) {
                 System.out.println(cada);
                 tabla.addCell(cada);
@@ -253,8 +253,8 @@ public class LogicaGenerarVenta {
                     Productos pro = listadoProduc[i].getProducto();
                     
                     String[] fila = {pro.getCodigo() + "", pro.getNombre(),
-                        pro.getDescripcion(), pro.getCantidad() + "",
-                        pro.getPrecio() + ""};
+                        pro.getDescripcion(), listadoProduc[i].getCantidadVenta() + "",
+                        pro.getPrecio() + "",listadoProduc[i].getCantidadVenta()*pro.getPrecio()+""};
 
                     for (String cada : fila) {
                         tabla.addCell(cada);

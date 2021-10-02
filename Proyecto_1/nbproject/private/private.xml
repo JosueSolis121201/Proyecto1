@@ -3,9 +3,10 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/C:/Users/Norki/Desktop/Proyecto1/Proyecto_1/src/proyecto_1/vistas/VistaAdminAutenticacion.java</file>
             <file>file:/C:/Users/Norki/Desktop/Proyecto1/Proyecto_1/src/proyecto_1/Proyecto_1.java</file>
-            <file>file:/C:/Users/Norki/Desktop/Proyecto1/Proyecto_1/src/proyecto_1/vistas/VistaAdmin.java</file>
-            <file>file:/C:/Users/Norki/Desktop/Proyecto1/Proyecto_1/src/proyecto_1/vistas/VistaVendedor.java</file>
+            <file>file:/C:/Users/Norki/Desktop/Proyecto1/Proyecto_1/src/proyecto_1/logica/LogicaGenerarVenta.java</file>
+            <file>file:/C:/Users/Norki/Desktop/Proyecto1/Proyecto_1/src/proyecto_1/logica/LogicaVendedores.java</file>
         </group>
     </open-files>
 </project-private>
